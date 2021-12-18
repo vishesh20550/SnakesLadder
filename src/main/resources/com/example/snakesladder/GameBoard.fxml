@@ -4,21 +4,37 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="550.0" maxWidth="400.0" minHeight="550.0" minWidth="400.0" prefHeight="550.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.snakesladder.GameBoardController">
+<AnchorPane maxHeight="550.0" maxWidth="400.0" minHeight="550.0" minWidth="400.0" prefHeight="550.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.snakesladder.GameBoardController ">
    <children>
-      <ImageView fx:id="bgImageView2" fitHeight="766.0" fitWidth="1078.0" layoutX="-368.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="bgImageView2" fitHeight="799.0" fitWidth="400.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@bg.jpg" />
+            <Image url="@intro_bg.jpg" />
          </image>
       </ImageView>
       <ImageView fx:id="boardImageView" fitHeight="451.0" fitWidth="387.0" layoutX="37.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@gameBoard.png" />
+            <Image url="@gameBoard.jpg" />
          </image>
       </ImageView>
       <ImageView fx:id="backImageView" fitHeight="32.0" fitWidth="33.0" layoutX="3.0" layoutY="2.0" onMouseClicked="#onBackClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@back.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="35.0" fitWidth="70.0" layoutX="110.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@player1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="35.0" fitWidth="70.0" layoutX="225.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@player2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="53.0" fitWidth="50.0" layoutX="175.0" layoutY="487.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@dice1.png" />
          </image>
       </ImageView>
    </children>
