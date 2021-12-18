@@ -4,17 +4,27 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="550" maxWidth="400" minHeight="550" minWidth="400" prefHeight="550.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="main" maxHeight="550.0" maxWidth="400.0" minHeight="550.0" minWidth="400.0" prefHeight="550.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.snakesladder.IntroController">
    <children>
-      <AnchorPane layoutX="-404.0" layoutY="-43.0">
-         <children>
-            <ImageView fx:id="imageView" fitHeight="766.0" fitWidth="1078.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@bg.jpg" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
+      <ImageView fx:id="bgImageView" fitHeight="766.0" fitWidth="1078.0" layoutX="-288.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@bg.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="logoImageView" fitHeight="391.0" fitWidth="361.0" layoutX="27.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pwm" fitHeight="150.0" fitWidth="200.0" layoutX="89.0" layoutY="346.0" onMouseClicked="#onPwmCLick" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pwm.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pwm1" fitHeight="150.0" fitWidth="200.0" layoutX="89.0" layoutY="412.0" onMouseClicked="#onPwcCLick" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pwc.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

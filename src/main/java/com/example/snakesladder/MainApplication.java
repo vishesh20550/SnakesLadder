@@ -14,6 +14,8 @@ public class MainApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(),400,550);
         stage.setTitle("Hello!");
         stage.setResizable(false);
+        String css = MainApplication.class.getResource("css.css").toExternalForm();
+        scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.show();
 
