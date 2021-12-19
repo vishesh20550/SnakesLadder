@@ -1,5 +1,8 @@
 package com.example.snakesladder;
 
+import javafx.animation.ParallelTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,6 +22,10 @@ public class IntroController implements Initializable {
 
     @FXML
     ImageView logoImageView;
+    @FXML
+    ImageView pwm;
+    @FXML
+    ImageView pwc;
 
     @FXML
     public void onPwmCLick(MouseEvent event){
@@ -45,6 +53,32 @@ public class IntroController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        ScaleTransition scale = new ScaleTransition(Duration.millis(1000));
+        ScaleTransition scale1 = new ScaleTransition(Duration.millis(1000));
+        scale.setNode(pwm);
+
+        scale.setFromX(0.0);
+        scale.setFromY(0.0);
+        scale.setToX(1);
+        scale.setToY(1);
+
+        scale1.setNode(pwc);
+        scale1.setFromX(0.0);
+        scale1.setFromY(0.0);
+        scale1.setToX(1);
+        scale1.setToY(1);
+
+
+        TranslateTransition translate1 = new TranslateTransition();
+        translate1.setNode(logoImageView);
+        translate1.setDuration(Duration.millis(1000));
+        translate1.setByY(99);
+
+
+        ParallelTransition para = new ParallelTransition(scale,scale1,translate1);
+        para.play();
+
 
     }
 }

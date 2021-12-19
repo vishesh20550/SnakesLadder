@@ -23,10 +23,23 @@
       </ImageView>
       <ImageView fx:id="p1ImageView" fitHeight="35.0" fitWidth="70.0" layoutX="110.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="p2ImageView" fitHeight="35.0" fitWidth="70.0" layoutX="225.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="diceImageView" fitHeight="53.0" fitWidth="50.0" layoutX="175.0" layoutY="487.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="blueToken" fitHeight="35.0" fitWidth="23.0" layoutX="38.0" layoutY="442.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="diceImageView" fitHeight="53.0" fitWidth="50.0" layoutX="171.0" layoutY="489.0" onMouseClicked="#onDiceRoll" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@blue_token.png" />
+            <Image url="@dice1.png" />
+         </image></ImageView>
+      <ImageView fx:id="blueToken" fitHeight="35.0" fitWidth="23.0" layoutX="20.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@blue_token.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="diceArrow" fitHeight="33.0" fitWidth="20.0" layoutX="186.0" layoutY="481.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@dice_arrow.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="23.0" fitWidth="32.0" layoutX="42.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@up_arrow.png" />
          </image>
       </ImageView>
    </children>

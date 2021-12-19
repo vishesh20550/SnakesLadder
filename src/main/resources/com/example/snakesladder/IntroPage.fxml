@@ -11,7 +11,7 @@
             <Image url="@intro_bg.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="logoImageView" fitHeight="150.0" fitWidth="282.0" layoutX="59.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="logoImageView" fitHeight="150.0" fitWidth="282.0" layoutX="59.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@intro_logo.png" />
          </image>
