@@ -4,7 +4,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="550.0" maxWidth="400.0" minHeight="550.0" minWidth="400.0" prefHeight="550.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.snakesladder.GameBoardController ">
+<AnchorPane maxHeight="550.0" maxWidth="400.0" minHeight="550.0" minWidth="400.0" prefHeight="550.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.snakesladder.GameBoardController">
    <children>
       <ImageView fx:id="bgImageView2" fitHeight="799.0" fitWidth="400.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -21,20 +21,12 @@
             <Image url="@back.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="35.0" fitWidth="70.0" layoutX="110.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="p1ImageView" fitHeight="35.0" fitWidth="70.0" layoutX="110.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="p2ImageView" fitHeight="35.0" fitWidth="70.0" layoutX="225.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="diceImageView" fitHeight="53.0" fitWidth="50.0" layoutX="175.0" layoutY="487.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="blueToken" fitHeight="35.0" fitWidth="23.0" layoutX="38.0" layoutY="442.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@player1.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="35.0" fitWidth="70.0" layoutX="225.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@player2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="53.0" fitWidth="50.0" layoutX="175.0" layoutY="487.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@dice1.png" />
+            <Image url="@blue_token.png" />
          </image>
       </ImageView>
    </children>

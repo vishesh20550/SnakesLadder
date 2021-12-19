@@ -2,14 +2,22 @@ package com.example.snakesladder;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class IntroController{
+public class IntroController implements Initializable {
+
+    @FXML
+    ImageView logoImageView;
 
     @FXML
     public void onPwmCLick(MouseEvent event){
@@ -33,5 +41,10 @@ public class IntroController{
     public void onPwcCLick(MouseEvent event){
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("GameBoard.fxml"));
         setAndShowScene(event, fxmlLoader);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }

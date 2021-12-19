@@ -11,17 +11,17 @@
             <Image url="@intro_bg.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="logoImageView" fitHeight="150.0" fitWidth="282.0" layoutX="48.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="logoImageView" fitHeight="150.0" fitWidth="282.0" layoutX="59.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@intro_logo.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="pwm" fitHeight="150.0" fitWidth="200.0" layoutX="89.0" layoutY="284.0" onMouseClicked="#onPwmCLick" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="pwm" fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="285.0" onMouseClicked="#onPwmCLick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pwm.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="pwm1" fitHeight="150.0" fitWidth="200.0" layoutX="89.0" layoutY="369.0" onMouseClicked="#onPwcCLick" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="pwc" fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="369.0" onMouseClicked="#onPwcCLick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pwc.png" />
          </image>
