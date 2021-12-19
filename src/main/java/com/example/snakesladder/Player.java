@@ -8,6 +8,8 @@ public class Player {
     private int yCord=488;
     private boolean turn=true;
     private int tileNumber=0;
+    private int stepX=32;
+    private int stepY=-45;
 
 
     private boolean active=false;
@@ -66,5 +68,21 @@ public class Player {
     public void setActive(boolean active) {
         this.active = active;
         this.yCord=448;
+    }
+
+    public int getStepX() {
+        return stepX;
+    }
+
+    public void setStepX(int stepX) {
+        this.stepX = stepX;
+    }
+
+    public int getStepY() {
+        return stepY;
+    }
+
+    public void setStepY(int stepY) {
+        this.stepY = stepY;
     }
 }
