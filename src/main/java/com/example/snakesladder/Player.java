@@ -1,17 +1,16 @@
 package com.example.snakesladder;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.util.Objects;
 
 public class Player {
     private String color;
-    private int xCord;
-    private int yCord=488;
+    private double xCord;
+    private double yCord=488;
     private boolean turn=true;
     private int tileNumber=0;
-    private int stepX=32;
+    private double stepX=32;
     private double stepY=-45.55;
     private Image image_active,image_inactive;
     private boolean active=false;
@@ -38,7 +37,7 @@ public class Player {
         this.color = color;
     }
 
-    public int getxCord() {
+    public double getxCord() {
         return xCord;
     }
 
@@ -46,7 +45,7 @@ public class Player {
         this.xCord = xCord;
     }
 
-    public int getyCord() {
+    public double getyCord() {
         return yCord;
     }
 
@@ -78,11 +77,11 @@ public class Player {
         this.yCord=448;
     }
 
-    public int getStepX() {
+    public double getStepX() {
         return stepX;
     }
 
-    public void setStepX(int stepX) {
+    public void setStepX(double stepX) {
         this.stepX = stepX;
     }
 

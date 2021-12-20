@@ -1,30 +1,29 @@
 package com.example.snakesladder;
 
-import javafx.animation.FadeTransition;
+import javafx.animation.PathTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Polyline;
 import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Random;
-import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
 
 public class GameBoardController implements Initializable {
     private int diceRolledFinal;
     HashMap<Integer,Integer> snakes = new HashMap<>();
     HashMap<Integer,Integer> ladders= new HashMap<>();
+
+    @FXML
+    private ImageView bgImageView2;
     @FXML
     private ImageView p1ImageView;
     @FXML
@@ -63,7 +62,7 @@ public class GameBoardController implements Initializable {
     }
 
     @FXML
-    public void onDiceRoll(MouseEvent event) throws IOException {
+    public void onDiceRoll(MouseEvent event) {
         diceArrow.setVisible(false);
         Random rand = new Random();
         Thread thread = new Thread(){
@@ -122,6 +121,7 @@ public class GameBoardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         diceArrow.setVisible(true);
+        initializeSnakesAndLadders();
         p1ImageView.setImage(player1.getImage_active());
         p2ImageView.setImage(player2.getImage_inactive());
         TranslateTransition translate = new TranslateTransition();
@@ -134,7 +134,7 @@ public class GameBoardController implements Initializable {
         translate.play();
     }
 
-    public void movePlayer(Player player) throws IOException {
+    public void movePlayer(Player player) {
         if(player.getColor().equals("blueToken")){
 
             movePlayerHelper(player, blueToken);
@@ -144,7 +144,7 @@ public class GameBoardController implements Initializable {
         }
     }
 
-    private void movePlayerHelper(Player player, ImageView token) throws IOException {
+    private void movePlayerHelper(Player player, ImageView token) {
         if(player.getTileNumber()+diceRolledFinal>100){
             return;
         }
@@ -162,8 +162,85 @@ public class GameBoardController implements Initializable {
                 onWin(player);
             }
         }
+        if(snakes.containsKey(player.getTileNumber())){
+//            Polyline polyline= new Polyline();
+//            Double[] path= snakePath1(player.getTileNumber(),token,player);
+//            System.out.println(Arrays.toString(path));
+//            polyline.getPoints().addAll(path);
+//            PathTransition transition= new PathTransition();
+//            transition.setNode(token);
+//            transition.setDuration(Duration.seconds(2));
+//            transition.setPath(polyline);
+//            transition.setCycleCount(1);
+//            transition.play();
+//            player.setTileNumber(snakes.get(player.getTileNumber()));
+//            System.out.println("Token is at = "+ token.getLayoutX()+" "+token.getLayoutY());
+//            System.out.println("Token is at = "+ token.getTranslateX()+" "+token.getTranslateY());
+            snakePath(player.getTileNumber(),token,player);
+        }
+        if(ladders.containsKey(player.getTileNumber())){
+            ladderPath(player.getTileNumber(),token,player);
+        }
     }
-    public void onWin(Player player) throws IOException {
+
+
+    public void snakePath(int src,ImageView token,Player player){
+        player.setTileNumber(snakes.get(player.getTileNumber()));
+        if(src==24 || src==26 || src==28){
+            player.setStepX(-player.getStepX());
+            token.setLayoutX(token.getLayoutX()-32);
+            token.setLayoutY(token.getLayoutY()+45.55);
+        }
+        else if(src==59 || src == 57 || src==55 || src ==99 || src == 97  || src == 95){
+            token.setLayoutX(token.getLayoutX()+32);
+            token.setLayoutY(token.getLayoutY()+(2*45.55));
+        }
+        else{
+            token.setLayoutY(token.getLayoutY()+(5*45.55));
+        }
+    }
+    public void ladderPath(int src,ImageView token,Player player){
+        player.setTileNumber(ladders.get(player.getTileNumber()));
+        if(src==64 || src==66 || src==68){
+            token.setLayoutX(token.getLayoutX()-32);
+            token.setLayoutY(token.getLayoutY()-(2*45.55));
+        }
+        else if(src==37 || src == 35 || src==33 || src ==5 || src == 7  || src == 9){
+            player.setStepX(-player.getStepX());
+            token.setLayoutX(token.getLayoutX()-32);
+            token.setLayoutY(token.getLayoutY()-45.55);
+        }
+        else{
+            player.setStepX(-player.getStepX());
+            token.setLayoutY(token.getLayoutY()-(4*45.55));
+        }
+    }
+
+
+//    public Double[] snakePath1(int src,ImageView token,Player player){
+//        double xCord= token.getTranslateX();
+//        double yCord= token.getTranslateY();
+//        if(src==24 || src==26 || src==28){
+//            player.setStepX(-player.getStepX());
+//            return new Double[]{
+//                    xCord,yCord,
+//                    xCord-23,yCord+62.05
+//            };
+//        }
+//        else if(src==59 || src == 57 || src==55 || src ==99 || src == 97  || src == 95){
+//            return new Double[]{
+//                    xCord,yCord,
+//                    xCord+23,yCord+(2*62.05)
+//            };
+//        }
+//        else{
+//            return new Double[]{
+//                    xCord,yCord,
+//                    xCord,yCord+(5*62.05)
+//            };
+//        }
+//    }
+    public void onWin(Player player) {
         setOpacityGameBoard(0.5);
         if(player.getColor().equals("blueToken")){
             win.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("win_image_player1.png"))));
@@ -173,9 +250,7 @@ public class GameBoardController implements Initializable {
         }
         replayImageView.setVisible(true);
         menuImageView.setVisible(true);
-        replayImageView.setOnMouseClicked(mouseEvent -> {
-            new IntroController().onPwmCLick(mouseEvent);
-        });
+        replayImageView.setOnMouseClicked(mouseEvent -> new IntroController().onPwmCLick(mouseEvent));
         menuImageView.setOnMouseClicked(mouseEvent -> {
             try {
                 onBackClick(mouseEvent);

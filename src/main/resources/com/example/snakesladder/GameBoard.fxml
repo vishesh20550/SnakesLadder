@@ -5,58 +5,37 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="main2" maxHeight="550.0" maxWidth="394.0" minHeight="550.0" minWidth="394.0" prefHeight="550.0" prefWidth="394.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.snakesladder.GameBoardController">
-   <children>
-      <ImageView fx:id="bgImageView2" fitHeight="799.0" fitWidth="400.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@intro_bg.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="boardImageView" fitHeight="451.0" fitWidth="387.0" layoutX="37.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@gameBoard.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="backImageView" fitHeight="32.0" fitWidth="33.0" layoutX="3.0" layoutY="2.0" onMouseClicked="#onBackClick" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@back.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="p1ImageView" fitHeight="35.0" fitWidth="70.0" layoutX="103.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="p2ImageView" fitHeight="35.0" fitWidth="70.0" layoutX="221.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="diceImageView" fitHeight="53.0" fitWidth="50.0" layoutX="171.0" layoutY="489.0" onMouseClicked="#onDiceRoll" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@dice1.png" />
-         </image></ImageView>
-      <ImageView fx:id="blueToken" fitHeight="33.0" fitWidth="18.0" layoutX="38.0" layoutY="487.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@blue_token.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="greenToken" fitHeight="33.0" fitWidth="18.0" layoutX="52.0" layoutY="489.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@green_token.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="diceArrow" fitHeight="33.0" fitWidth="20.0" layoutX="186.0" layoutY="481.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@dice_arrow.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="startArrow" fitHeight="23.0" fitWidth="32.0" layoutX="42.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@up_arrow.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="win" fitHeight="257.0" fitWidth="284.0" layoutX="56.0" layoutY="140.0" pickOnBounds="true" />
-      <ImageView fx:id="menuImageView" fitHeight="42.0" fitWidth="84.0" layoutX="96.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true" visible="false">
-         <image>
-            <Image url="@win_image_button_menu.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="replayImageView" fitHeight="39.0" fitWidth="107.0" layoutX="206.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true" visible="false">
-         <image>
-            <Image url="@win_image_button_replay.png" />
-         </image>
-      </ImageView>
-   </children>
+   <ImageView fx:id="bgImageView2" fitHeight="799.0" fitWidth="400.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@intro_bg.jpg" />
+   </ImageView>
+   <ImageView fx:id="boardImageView" fitHeight="451.0" fitWidth="387.0" layoutX="37.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@gameBoard.jpg" />
+   </ImageView>
+   <ImageView fx:id="backImageView" fitHeight="32.0" fitWidth="33.0" layoutX="3.0" layoutY="2.0" onMouseClicked="#onBackClick" pickOnBounds="true" preserveRatio="true">
+      <Image url="@back.jpg" />
+   </ImageView>
+   <ImageView fx:id="p1ImageView" fitHeight="35.0" fitWidth="70.0" layoutX="103.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" />
+   <ImageView fx:id="p2ImageView" fitHeight="35.0" fitWidth="70.0" layoutX="221.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" />
+   <ImageView fx:id="diceImageView" fitHeight="53.0" fitWidth="50.0" layoutX="171.0" layoutY="489.0" onMouseClicked="#onDiceRoll" pickOnBounds="true" preserveRatio="true">
+      <Image url="@dice1.png" />
+   </ImageView>
+   <ImageView fx:id="blueToken" fitHeight="33.0" fitWidth="18.0" layoutX="38.0" layoutY="487.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@blue_token.png" />
+   </ImageView>
+   <ImageView fx:id="greenToken" fitHeight="33.0" fitWidth="18.0" layoutX="52.0" layoutY="489.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@green_token.png" />
+   </ImageView>
+   <ImageView fx:id="diceArrow" fitHeight="33.0" fitWidth="20.0" layoutX="186.0" layoutY="481.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@dice_arrow.png" />
+   </ImageView>
+   <ImageView fx:id="startArrow" fitHeight="23.0" fitWidth="32.0" layoutX="42.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@up_arrow.png" />
+   </ImageView>
+   <ImageView fx:id="win" fitHeight="257.0" fitWidth="284.0" layoutX="56.0" layoutY="140.0" pickOnBounds="true" />
+   <ImageView fx:id="menuImageView" fitHeight="42.0" fitWidth="84.0" layoutX="96.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <Image url="@win_image_button_menu.png" />
+   </ImageView>
+   <ImageView fx:id="replayImageView" fitHeight="39.0" fitWidth="107.0" layoutX="206.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <Image url="@win_image_button_replay.png" />
+   </ImageView>
 </AnchorPane>
