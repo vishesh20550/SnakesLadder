@@ -1,15 +1,19 @@
 package com.example.snakesladder;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -17,6 +21,13 @@ import java.util.concurrent.TimeUnit;
 
 public class GameBoardController implements Initializable {
     private int diceRolledFinal;
+
+    @FXML
+    private ImageView win;
+
+    @FXML
+    private AnchorPane main2;
+
     @FXML
     private ImageView blueToken;
     @FXML
@@ -58,10 +69,18 @@ public class GameBoardController implements Initializable {
                 }
                 diceRolledFinal=diceRolled;
                 if(player1.isTurn()){
-                    checkPlayerStatus(player1, blueToken, player2);
+                    try {
+                        checkPlayerStatus(player1, blueToken, player2);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 else{
-                    checkPlayerStatus(player2, greenToken, player1);
+                    try {
+                        checkPlayerStatus(player2, greenToken, player1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 diceArrow.setVisible(true);
             }
@@ -69,7 +88,7 @@ public class GameBoardController implements Initializable {
         thread.start();
     }
 
-    private void checkPlayerStatus(Player player2, ImageView greenToken, Player player1) {
+    private void checkPlayerStatus(Player player2, ImageView greenToken, Player player1) throws IOException {
         if(player2.isActive()){
             movePlayer(player2);
         }
@@ -97,7 +116,7 @@ public class GameBoardController implements Initializable {
         translate.play();
     }
 
-    public void movePlayer(Player player){
+    public void movePlayer(Player player) throws IOException {
         if(player.getColor().equals("blueToken")){
 
             movePlayerHelper(player, blueToken);
@@ -107,7 +126,10 @@ public class GameBoardController implements Initializable {
         }
     }
 
-    private void movePlayerHelper(Player player, ImageView token) {
+    private void movePlayerHelper(Player player, ImageView token) throws IOException {
+        if(player.getTileNumber()+diceRolledFinal>100){
+            return;
+        }
         for(int i=0;i<diceRolledFinal;i++){
             if(((player.getTileNumber()+1)%10==1 )&& (player.getTileNumber()>=10)){
                 player.setStepX(-player.getStepX());
@@ -117,6 +139,16 @@ public class GameBoardController implements Initializable {
                 token.setLayoutX(player.getStepX() + token.getLayoutX());
             }
             player.setTileNumber(player.getTileNumber() + 1);
+            if(player.getTileNumber()==100){
+                System.out.println(player.getColor()+" won");
+                onWin(player);
+            }
         }
+    }
+    public void onWin(Player player) throws IOException {
+        win.setImage(new Image(getClass().getResourceAsStream("snake.png")));
+        win.setOnMouseClicked(mouseEvent -> {
+            new IntroController().onPwcCLick(mouseEvent);
+        });
     }
 }

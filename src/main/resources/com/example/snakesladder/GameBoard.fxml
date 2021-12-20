@@ -4,7 +4,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="550.0" maxWidth="400.0" minHeight="550.0" minWidth="400.0" prefHeight="550.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.snakesladder.GameBoardController">
+<AnchorPane fx:id="main2" maxHeight="550.0" maxWidth="400.0" minHeight="550.0" minWidth="400.0" prefHeight="550.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.snakesladder.GameBoardController">
    <children>
       <ImageView fx:id="bgImageView2" fitHeight="799.0" fitWidth="400.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -47,5 +47,6 @@
             <Image url="@up_arrow.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="win" fitHeight="150.0" fitWidth="200.0" layoutX="96.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
