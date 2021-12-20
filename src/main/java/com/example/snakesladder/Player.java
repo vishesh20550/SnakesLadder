@@ -1,6 +1,9 @@
 package com.example.snakesladder;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.util.Objects;
 
 public class Player {
     private String color;
@@ -9,16 +12,21 @@ public class Player {
     private boolean turn=true;
     private int tileNumber=0;
     private int stepX=32;
-    private int stepY=-45;
-
-
+    private double stepY=-45.55;
+    private Image image_active,image_inactive;
     private boolean active=false;
-
     public Player(String color) {
-        if(color.equals("blueToken"))
-            this.xCord=38;
-        else
-            this.xCord=52;
+        if(color.equals("blueToken")) {
+            this.xCord = 38;
+            this.image_inactive= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player1_inactive.jpg")));
+            this.image_active= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player1_active.jpg")));
+
+        }
+        else {
+            this.xCord = 52;
+            this.image_inactive= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player2_inactive.jpg")));
+            this.image_active= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player2_active.jpg")));
+        }
         this.color = color;
     }
 
@@ -78,11 +86,27 @@ public class Player {
         this.stepX = stepX;
     }
 
-    public int getStepY() {
+    public double getStepY() {
         return stepY;
     }
 
-    public void setStepY(int stepY) {
+    public void setStepY(double stepY) {
         this.stepY = stepY;
+    }
+
+    public Image getImage_active() {
+        return image_active;
+    }
+
+    public void setImage_active(Image image_active) {
+        this.image_active = image_active;
+    }
+
+    public Image getImage_inactive() {
+        return image_inactive;
+    }
+
+    public void setImage_inactive(Image image_inactive) {
+        this.image_inactive = image_inactive;
     }
 }

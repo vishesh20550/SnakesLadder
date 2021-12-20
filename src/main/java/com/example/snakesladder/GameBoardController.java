@@ -15,44 +15,56 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 public class GameBoardController implements Initializable {
     private int diceRolledFinal;
-
+    HashMap<Integer,Integer> snakes = new HashMap<>();
+    HashMap<Integer,Integer> ladders= new HashMap<>();
+    @FXML
+    private ImageView p1ImageView;
+    @FXML
+    private ImageView p2ImageView;
     @FXML
     private ImageView win;
-
+    @FXML
+    private ImageView menuImageView;
+    @FXML
+    private ImageView replayImageView;
     @FXML
     private AnchorPane main2;
-
     @FXML
     private ImageView blueToken;
     @FXML
     private ImageView greenToken;
-
+    @FXML
+    private ImageView backImageView;
     @FXML
     private ImageView diceImageView;
-
+    @FXML
+    private ImageView boardImageView;
     @FXML
     private ImageView diceArrow;
+    @FXML
+    private ImageView startArrow;
 
     Player player1= new Player("blueToken");
     Player player2= new Player("greenToken");
 
     @FXML
-    public void onBackClick(MouseEvent event){
+    public void onBackClick(MouseEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IntroPage.fxml"));
         new IntroController().setAndShowScene(event,fxmlLoader);
         System.out.println(diceRolledFinal);
     }
 
     @FXML
-    public void onDiceRoll(MouseEvent event){
+    public void onDiceRoll(MouseEvent event) throws IOException {
         diceArrow.setVisible(false);
-
         Random rand = new Random();
         Thread thread = new Thread(){
             int diceRolled;
@@ -74,6 +86,8 @@ public class GameBoardController implements Initializable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    p1ImageView.setImage(player1.getImage_inactive());
+                    p2ImageView.setImage(player2.getImage_active());
                 }
                 else{
                     try {
@@ -81,6 +95,8 @@ public class GameBoardController implements Initializable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    p1ImageView.setImage(player1.getImage_active());
+                    p2ImageView.setImage(player2.getImage_inactive());
                 }
                 diceArrow.setVisible(true);
             }
@@ -106,6 +122,8 @@ public class GameBoardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         diceArrow.setVisible(true);
+        p1ImageView.setImage(player1.getImage_active());
+        p2ImageView.setImage(player2.getImage_inactive());
         TranslateTransition translate = new TranslateTransition();
         translate.setNode(diceArrow);
         translate.setDuration(Duration.millis(400));
@@ -146,9 +164,59 @@ public class GameBoardController implements Initializable {
         }
     }
     public void onWin(Player player) throws IOException {
-        win.setImage(new Image(getClass().getResourceAsStream("snake.png")));
-        win.setOnMouseClicked(mouseEvent -> {
-            new IntroController().onPwcCLick(mouseEvent);
+        setOpacityGameBoard(0.5);
+        if(player.getColor().equals("blueToken")){
+            win.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("win_image_player1.png"))));
+        }
+        else{
+            win.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("win_image_player1.png"))));
+        }
+        replayImageView.setVisible(true);
+        menuImageView.setVisible(true);
+        replayImageView.setOnMouseClicked(mouseEvent -> {
+            new IntroController().onPwmCLick(mouseEvent);
         });
+        menuImageView.setOnMouseClicked(mouseEvent -> {
+            try {
+                onBackClick(mouseEvent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+    
+    public void setOpacityGameBoard(double v){
+        diceImageView.setOpacity(v);
+        boardImageView.setOpacity(v);
+        blueToken.setOpacity(v);
+        greenToken.setOpacity(v);
+        backImageView.setOpacity(v);
+        diceArrow.setOpacity(0);
+        startArrow.setOpacity(v);
+        p1ImageView.setOpacity(v);
+        p2ImageView.setOpacity(v);
+    }
+    public void initializeSnakesAndLadders(){
+        snakes.put(24,18);
+        snakes.put(26,16);
+        snakes.put(28,14);
+        snakes.put(55,34);
+        snakes.put(57,36);
+        snakes.put(59,38);
+        snakes.put(91,50);
+        snakes.put(95,74);
+        snakes.put(97,76);
+        snakes.put(99,78);
+        ladders.put(5,17);
+        ladders.put(7,15);
+        ladders.put(9,13);
+        ladders.put(33,47);
+        ladders.put(35,45);
+        ladders.put(37,43);
+        ladders.put(41,81);
+        ladders.put(68,87);
+        ladders.put(66,85);
+        ladders.put(64,83);
+
     }
 }
