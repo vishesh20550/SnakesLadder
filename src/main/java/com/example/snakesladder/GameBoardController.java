@@ -1,6 +1,8 @@
 package com.example.snakesladder;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -103,15 +105,23 @@ public class GameBoardController implements Initializable {
         thread.start();
     }
 
-    private void checkPlayerStatus(Player player2, ImageView greenToken, Player player1) throws IOException {
+    private void checkPlayerStatus(Player player2, ImageView token, Player player1) throws IOException {
         if(player2.isActive()){
             movePlayer(player2);
         }
         else{
             if (diceRolledFinal==1){
                 player2.setActive(true);
-                greenToken.setLayoutY(player2.getyCord());
-                player2.setTileNumber(1);
+//                greenToken.setLayoutY(player2.getyCord());
+                TranslateTransition transition= new TranslateTransition();
+                transition.setByY(-44);
+                transition.setDuration(Duration.millis(100));
+                transition.setNode(token);
+                transition.setOnFinished(event -> {
+                    player2.setTileNumber(1);
+                    System.out.println(player2.getColor() + " is on " + player2.getTileNumber());
+                });
+                transition.play();
             }
         }
         player2.setTurn(false);
@@ -135,111 +145,176 @@ public class GameBoardController implements Initializable {
     }
 
     public void movePlayer(Player player) {
-        if(player.getColor().equals("blueToken")){
-
-            movePlayerHelper(player, blueToken);
-        }
-        else{
-            movePlayerHelper(player, greenToken);
-        }
-    }
-
-    private void movePlayerHelper(Player player, ImageView token) {
         if(player.getTileNumber()+diceRolledFinal>100){
             return;
         }
-        for(int i=0;i<diceRolledFinal;i++){
-            if(((player.getTileNumber()+1)%10==1 )&& (player.getTileNumber()>=10)){
-                player.setStepX(-player.getStepX());
-                token.setLayoutY(player.getStepY()+ token.getLayoutY());
-            }
-            else{
-                token.setLayoutX(player.getStepX() + token.getLayoutX());
-            }
-            player.setTileNumber(player.getTileNumber() + 1);
+        ImageView token;
+        if(player.getColor().equals("blueToken"))
+            token=blueToken;
+        else
+            token=greenToken;
+        Timeline timeline= new Timeline(new KeyFrame(Duration.millis(300),event -> {
+            movePlayerHelper(player,token);
+            System.out.println(player.getColor()+" is on "+player.getTileNumber());
+        }));
+        timeline.setCycleCount(diceRolledFinal);
+        timeline.setOnFinished(event -> {
+            System.out.println("Before check");
             if(player.getTileNumber()==100){
                 System.out.println(player.getColor()+" won");
                 onWin(player);
             }
-        }
-        if(snakes.containsKey(player.getTileNumber())){
-//            Polyline polyline= new Polyline();
-//            Double[] path= snakePath1(player.getTileNumber(),token,player);
-//            System.out.println(Arrays.toString(path));
-//            polyline.getPoints().addAll(path);
-//            PathTransition transition= new PathTransition();
-//            transition.setNode(token);
-//            transition.setDuration(Duration.seconds(2));
-//            transition.setPath(polyline);
-//            transition.setCycleCount(1);
-//            transition.play();
-//            player.setTileNumber(snakes.get(player.getTileNumber()));
-//            System.out.println("Token is at = "+ token.getLayoutX()+" "+token.getLayoutY());
-//            System.out.println("Token is at = "+ token.getTranslateX()+" "+token.getTranslateY());
-            snakePath(player.getTileNumber(),token,player);
-        }
-        if(ladders.containsKey(player.getTileNumber())){
-            ladderPath(player.getTileNumber(),token,player);
-        }
+
+            if (snakes.containsKey(player.getTileNumber())) {
+                Polyline polyline = new Polyline();
+                Double[] path = snakePath1(player.getTileNumber(), token, player);
+                System.out.println(Arrays.toString(path));
+                polyline.getPoints().addAll(path);
+                PathTransition ptransition = new PathTransition();
+                ptransition.setNode(token);
+                ptransition.setDuration(Duration.seconds(2));
+                ptransition.setPath(polyline);
+                ptransition.setCycleCount(1);
+                ptransition.play();
+                player.setTileNumber(snakes.get(player.getTileNumber()));
+                System.out.println("Token is at = " + token.getLayoutX() + " " + token.getLayoutY());
+                System.out.println("Token is at = " + token.getTranslateX() + " " + token.getTranslateY());
+//            snakePath(player.getTileNumber(),token,player);
+                player.setTileNumber(snakes.get(player.getTileNumber()));
+            }
+            else if (ladders.containsKey(player.getTileNumber())) {
+                System.out.println(player.getColor()+" is on ladder with tile "+player.getTileNumber());
+                ladderPath(player.getTileNumber(), token, player);
+            }
+        });
+        timeline.play();
     }
 
-
-    public void snakePath(int src,ImageView token,Player player){
-        player.setTileNumber(snakes.get(player.getTileNumber()));
-        if(src==24 || src==26 || src==28){
+    private void movePlayerHelper(Player player,ImageView token){
+        TranslateTransition transition= new TranslateTransition();
+        transition.setNode(token);
+        double byX,byY;
+        if(((player.getTileNumber()+1)%10==1 )&& (player.getTileNumber()>=10)){
             player.setStepX(-player.getStepX());
-            token.setLayoutX(token.getLayoutX()-32);
-            token.setLayoutY(token.getLayoutY()+45.55);
-        }
-        else if(src==59 || src == 57 || src==55 || src ==99 || src == 97  || src == 95){
-            token.setLayoutX(token.getLayoutX()+32);
-            token.setLayoutY(token.getLayoutY()+(2*45.55));
+            byX=0;
+            byY=player.getStepY();
         }
         else{
-            token.setLayoutY(token.getLayoutY()+(5*45.55));
+            byX=player.getStepX();
+            byY=0;
         }
+        player.setTileNumber(player.getTileNumber()+1);
+        transition.setByX(byX);
+        transition.setByY(byY);
+        transition.setDuration(Duration.millis(10));
+        transition.play();
     }
+
+
+//    private void movePlayerHelper(Player player, ImageView token) {
+//        if(player.getTileNumber()+diceRolledFinal>100){
+//            return;
+//        }
+//        for(int i=0;i<diceRolledFinal;i++){
+//            if(((player.getTileNumber()+1)%10==1 )&& (player.getTileNumber()>=10)){
+//                player.setStepX(-player.getStepX());
+//                token.setLayoutY(player.getStepY()+ token.getLayoutY());
+//            }
+//            else{
+//                token.setLayoutX(player.getStepX() + token.getLayoutX());
+//            }
+//            player.setTileNumber(player.getTileNumber() + 1);
+//            if(player.getTileNumber()==100){
+//                System.out.println(player.getColor()+" won");
+//                onWin(player);
+//            }
+//        }
+//        if(snakes.containsKey(player.getTileNumber())){
+////            Polyline polyline= new Polyline();
+////            Double[] path= snakePath1(player.getTileNumber(),token,player);
+////            System.out.println(Arrays.toString(path));
+////            polyline.getPoints().addAll(path);
+////            PathTransition transition= new PathTransition();
+////            transition.setNode(token);
+////            transition.setDuration(Duration.seconds(2));
+////            transition.setPath(polyline);
+////            transition.setCycleCount(1);
+////            transition.play();
+////            player.setTileNumber(snakes.get(player.getTileNumber()));
+////            System.out.println("Token is at = "+ token.getLayoutX()+" "+token.getLayoutY());
+////            System.out.println("Token is at = "+ token.getTranslateX()+" "+token.getTranslateY());
+//            snakePath(player.getTileNumber(),token,player);
+//        }
+//        if(ladders.containsKey(player.getTileNumber())){
+//            ladderPath(player.getTileNumber(),token,player);
+//        }
+//    }
+
+
+//    public void snakePath(int src,ImageView token,Player player){
+//        player.setTileNumber(snakes.get(player.getTileNumber()));
+//        if(src==24 || src==26 || src==28){
+//            player.setStepX(-player.getStepX());
+//            token.setLayoutX(token.getLayoutX()-32);
+//            token.setLayoutY(token.getLayoutY()+45.55);
+//        }
+//        else if(src==59 || src == 57 || src==55 || src ==99 || src == 97  || src == 95){
+//            token.setLayoutX(token.getLayoutX()+32);
+//            token.setLayoutY(token.getLayoutY()+(2*45.55));
+//        }
+//        else{
+//            token.setLayoutY(token.getLayoutY()+(5*45.55));
+//        }
+//    }
     public void ladderPath(int src,ImageView token,Player player){
         player.setTileNumber(ladders.get(player.getTileNumber()));
+        double byX,byY;
         if(src==64 || src==66 || src==68){
-            token.setLayoutX(token.getLayoutX()-32);
-            token.setLayoutY(token.getLayoutY()-(2*45.55));
+            byX=-32;
+            byY=-(2*45.55);
         }
         else if(src==37 || src == 35 || src==33 || src ==5 || src == 7  || src == 9){
             player.setStepX(-player.getStepX());
-            token.setLayoutX(token.getLayoutX()-32);
-            token.setLayoutY(token.getLayoutY()-45.55);
+            byX=-32;
+            byY=-(45.55);
         }
         else{
             player.setStepX(-player.getStepX());
-            token.setLayoutY(token.getLayoutY()-(4*45.55));
+            byX=0;
+            byY=-(4*45.55);
         }
+        TranslateTransition transition= new TranslateTransition();
+        transition.setNode(token);
+        transition.setByY(byY);
+        transition.setByX(byX);
+        transition.setDuration(Duration.millis(300));
+        transition.play();
     }
 
 
-//    public Double[] snakePath1(int src,ImageView token,Player player){
-//        double xCord= token.getTranslateX();
-//        double yCord= token.getTranslateY();
-//        if(src==24 || src==26 || src==28){
-//            player.setStepX(-player.getStepX());
-//            return new Double[]{
-//                    xCord,yCord,
-//                    xCord-23,yCord+62.05
-//            };
-//        }
-//        else if(src==59 || src == 57 || src==55 || src ==99 || src == 97  || src == 95){
-//            return new Double[]{
-//                    xCord,yCord,
-//                    xCord+23,yCord+(2*62.05)
-//            };
-//        }
-//        else{
-//            return new Double[]{
-//                    xCord,yCord,
-//                    xCord,yCord+(5*62.05)
-//            };
-//        }
-//    }
+    public Double[] snakePath1(int src,ImageView token,Player player){
+        double xCord= token.getTranslateX();
+        double yCord= token.getTranslateY();
+        if(src==24 || src==26 || src==28){
+            player.setStepX(-player.getStepX());
+            return new Double[]{
+                    xCord,yCord,
+                    xCord-32,yCord+45.55
+            };
+        }
+        else if(src==59 || src == 57 || src==55 || src ==99 || src == 97  || src == 95){
+            return new Double[]{
+                    xCord,yCord,
+                    xCord+32,yCord+(2*45.55)
+            };
+        }
+        else{
+            return new Double[]{
+                    xCord,yCord,
+                    xCord,yCord+(5*45.55)
+            };
+        }
+    }
     public void onWin(Player player) {
         setOpacityGameBoard(0.5);
         if(player.getColor().equals("blueToken")){

@@ -17,14 +17,14 @@ public class Player {
     public Player(String color) {
         if(color.equals("blueToken")) {
             this.xCord = 38;
-            this.image_inactive= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player1_inactive.jpg")));
-            this.image_active= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player1_active.jpg")));
+            this.image_inactive= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player1_inactive.png")));
+            this.image_active= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player1_active.png")));
 
         }
         else {
             this.xCord = 52;
-            this.image_inactive= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player2_inactive.jpg")));
-            this.image_active= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player2_active.jpg")));
+            this.image_inactive= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player2_inactive.png")));
+            this.image_active= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player2_active.png")));
         }
         this.color = color;
     }
@@ -74,7 +74,7 @@ public class Player {
 
     public void setActive(boolean active) {
         this.active = active;
-        this.yCord=448;
+        this.yCord=444;
     }
 
     public double getStepX() {

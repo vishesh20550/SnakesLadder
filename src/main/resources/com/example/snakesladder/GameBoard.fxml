@@ -22,7 +22,7 @@
    <ImageView fx:id="blueToken" fitHeight="33.0" fitWidth="18.0" layoutX="38.0" layoutY="487.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@blue_token.png" />
    </ImageView>
-   <ImageView fx:id="greenToken" fitHeight="33.0" fitWidth="18.0" layoutX="52.0" layoutY="489.0" pickOnBounds="true" preserveRatio="true">
+   <ImageView fx:id="greenToken" fitHeight="33.0" fitWidth="18.0" layoutX="52.0" layoutY="487.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@green_token.png" />
    </ImageView>
    <ImageView fx:id="diceArrow" fitHeight="33.0" fitWidth="20.0" layoutX="186.0" layoutY="481.0" pickOnBounds="true" preserveRatio="true">
