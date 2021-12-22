@@ -38,4 +38,14 @@
    <ImageView fx:id="replayImageView" fitHeight="39.0" fitWidth="107.0" layoutX="206.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true" visible="false">
       <Image url="@win_image_button_replay.png" />
    </ImageView>
+   <ImageView fx:id="returnImageView" fitHeight="59.0" fitWidth="57.0" layoutX="102.0" layoutY="301.0" pickOnBounds="true" visible="false">
+      <image>
+         <Image url="@end_game_back.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="exitImageView" fitHeight="59.0" fitWidth="132.0" layoutX="169.0" layoutY="301.0" pickOnBounds="true" visible="false">
+      <image>
+         <Image url="@end_game_okay.png" />
+      </image>
+   </ImageView>
 </AnchorPane>
