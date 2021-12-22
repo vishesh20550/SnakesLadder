@@ -8,10 +8,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
@@ -22,6 +25,9 @@ public class GameBoardController implements Initializable {
     public boolean flag=false;
     HashMap<Integer,Snake> snakes = new HashMap<>();
     HashMap<Integer,Ladder> ladders= new HashMap<>();
+
+    private MediaPlayer player ;
+
 
     @FXML
     private ImageView exitImageView;
@@ -40,8 +46,6 @@ public class GameBoardController implements Initializable {
     @FXML
     private ImageView replayImageView;
     @FXML
-    private AnchorPane main2;
-    @FXML
     private ImageView blueToken;
     @FXML
     private ImageView greenToken;
@@ -57,27 +61,46 @@ public class GameBoardController implements Initializable {
     private ImageView startArrow;
     Player player1= new Player("blueToken");
     Player player2= new Player("greenToken");
+
+    //MEDIAPLAYER
+    public void selectTrack(Media media){
+        this.player = new MediaPlayer(media);
+    }
+    public void play(Media media) {
+        if (player != null) {
+            player.stop();
+        }
+        selectTrack(media);
+        player.play();
+    }
+
     @FXML
     public void onBackClick(MouseEvent event) throws IOException {
+        Media media= new Media(Paths.get("src/main/resources/com/example/snakesladder/Button.mp3").toUri().toString());
+        play(media);
         setOpacityGameBoard(0.5);
         win.setVisible(true);
         win.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("end_game.png"))));
         returnImageView.setVisible(true);
         exitImageView.setVisible(true);
         returnImageView.setOnMouseClicked(mouseEvent -> {
+            play(media);
             setOpacityGameBoard(1);
             returnImageView.setVisible(false);
             exitImageView.setVisible(false);
             win.setVisible(false);
         });
         exitImageView.setOnMouseClicked(mouseEvent -> {
+            play(media);
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IntroPage.fxml"));
             new IntroController().setAndShowScene(event, fxmlLoader);
-            System.out.println(diceRolledFinal);
         });
     }
+
     @FXML
     public void onDiceRoll(MouseEvent event) {
+        Media media= new Media(Paths.get("src/main/resources/com/example/snakesladder/newDice.mp3").toUri().toString());
+        play(media);
         if(!flag){
             flag=true;
             diceArrow.setVisible(false);
@@ -90,7 +113,7 @@ public class GameBoardController implements Initializable {
                         File file = new File("src/main/resources/com/example/snakesladder/roll" + i + ".jpg");
                         diceImageView.setImage(new Image(file.toURI().toString()));
                         try {
-                            Thread.sleep(60);
+                            Thread.sleep(70);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -122,12 +145,15 @@ public class GameBoardController implements Initializable {
             thread.start();
         }
     }
+
     private void checkPlayerStatus(Player player2, ImageView token, Player player1) throws IOException {
         if(player2.isActive()){
             movePlayer(player2);
         }
         else{
             if (diceRolledFinal==1){
+                Media media= new Media(Paths.get("src/main/resources/com/example/snakesladder/unlock.mp3").toUri().toString());
+                play(media);
                 player2.setActive(true);
 //                greenToken.setLayoutY(player2.getyCord());
                 TranslateTransition transition= new TranslateTransition();
@@ -144,8 +170,10 @@ public class GameBoardController implements Initializable {
         player2.setTurn(false);
         player1.setTurn(true);
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         diceArrow.setVisible(true);
         initializeSnakesAndLadders();
         p1ImageView.setImage(player1.getImage_active());
@@ -159,6 +187,7 @@ public class GameBoardController implements Initializable {
         translate.setAutoReverse(true);
         translate.play();
     }
+
     public void movePlayer(Player player) {
         if(player.getTileNumber()+diceRolledFinal>100){
             return;
@@ -177,10 +206,8 @@ public class GameBoardController implements Initializable {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println(player.getColor()+" is on "+player.getTileNumber());
             }
             if(player.getTileNumber()==100){
-                System.out.println(player.getColor()+" won");
                 onWin(player);
             }
             if (snakes.containsKey(player.getTileNumber())) {
@@ -193,6 +220,7 @@ public class GameBoardController implements Initializable {
         });
         thread.start();
     }
+
     private TranslateTransition movePlayerHelper(Player player,ImageView token){
         TranslateTransition transition= new TranslateTransition();
         transition.setNode(token);
@@ -215,6 +243,7 @@ public class GameBoardController implements Initializable {
         });
         return transition;
     }
+
     public void ladderPath(int src,ImageView token,Player player){
         player.setTileNumber(ladders.get(player.getTileNumber()).getDest());
         double byX,byY;
@@ -232,8 +261,11 @@ public class GameBoardController implements Initializable {
             byX=0;
             byY=-(4*45.55);
         }
+        Media media= new Media(Paths.get("src/main/resources/com/example/snakesladder/Ladder.mp3").toUri().toString());
+        play(media);
         translateSnakeLadder(token,byX,byY);
     }
+
     public void snakePath(int src,ImageView token,Player player){
         player.setTileNumber(snakes.get(player.getTileNumber()).getDest());
         double byX,byY;
@@ -251,8 +283,12 @@ public class GameBoardController implements Initializable {
             byX=0;
             byY=(5*45.55);
         }
+        Media media= new Media(Paths.get("src/main/resources/com/example/snakesladder/snake.mp3").toUri().toString());
+        play(media);
         translateSnakeLadder(token,byX,byY);
+
     }
+
     public void translateSnakeLadder(ImageView token,double x, double y){
         TranslateTransition transition= new TranslateTransition();
         transition.setNode(token);
@@ -262,7 +298,11 @@ public class GameBoardController implements Initializable {
         transition.play();
 
     }
+
     public void onWin(Player player) {
+        Media media= new Media(Paths.get("src/main/resources/com/example/snakesladder/Victory.mp3").toUri().toString());
+        play(media);
+
         setOpacityGameBoard(0.5);
         win.setVisible(true);
         if(player.getColor().equals("blueToken")){
@@ -275,6 +315,8 @@ public class GameBoardController implements Initializable {
         menuImageView.setVisible(true);
         replayImageView.setOnMouseClicked(mouseEvent -> new IntroController().onPwmCLick(mouseEvent));
         menuImageView.setOnMouseClicked(mouseEvent -> {
+            Media media1= new Media(Paths.get("src/main/resources/com/example/snakesladder/Button.mp3").toUri().toString());
+            play(media1);
             try {
                 onBackClick(mouseEvent);
             } catch (IOException e) {
@@ -282,6 +324,7 @@ public class GameBoardController implements Initializable {
             }
         });
     }
+
     public void setOpacityGameBoard(double v){
         diceImageView.setOpacity(v);
         boardImageView.setOpacity(v);
@@ -293,6 +336,7 @@ public class GameBoardController implements Initializable {
         p1ImageView.setOpacity(v);
         p2ImageView.setOpacity(v);
     }
+
     public void initializeSnakesAndLadders(){
         snakes.put(24,new Snake(24,18));
         snakes.put(26,new Snake(26, 16));

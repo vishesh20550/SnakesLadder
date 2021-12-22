@@ -20,10 +20,8 @@ public class MainApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(),400,550);
         stage.setTitle("Snakes and Ladders");
         stage.setResizable(false);
-        Media media= new Media(Paths.get("src/main/resources/com/example/snakesladder/bg_UI.mp3").toUri().toString());
-        MediaPlayer mediaPlayer= new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+
+      //  mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 //        String css = MainApplication.class.getResource("css.css").toExternalForm();
 //        scene.getStylesheets().add(css);
         stage.setScene(scene);

@@ -10,13 +10,18 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 public class IntroController implements Initializable {
+
+    private MediaPlayer player ;
 
     @FXML
     AnchorPane main;
@@ -29,9 +34,34 @@ public class IntroController implements Initializable {
 
     @FXML
     public void onPwmCLick(MouseEvent event){
+
+        Media media= new Media(Paths.get("src/main/resources/com/example/snakesladder/Button.mp3").toUri().toString());
+        play(media);
+
+
+        Media media1= new Media(Paths.get("src/main/resources/com/example/snakesladder/game_start.mp3").toUri().toString());
+        play(media1);
+
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("GameBoard.fxml"));
         setAndShowScene(event, fxmlLoader);
     }
+
+
+    public void selectTrack(Media media){
+        this.player = new MediaPlayer(media);
+    }
+    public void play(Media media) {
+        if (player != null) {
+            player.stop();
+        }
+        selectTrack(media);
+        player.play();
+    }
+
+
+
+
+
     public void setAndShowScene(MouseEvent event, FXMLLoader fxmlLoader){
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = null;
@@ -53,6 +83,8 @@ public class IntroController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Media media= new Media(Paths.get("src/main/resources/com/example/snakesladder/bg_UI.mp3").toUri().toString());
+        play(media);
 
         ScaleTransition scale = new ScaleTransition(Duration.millis(1000));
         ScaleTransition scale1 = new ScaleTransition(Duration.millis(1000));
