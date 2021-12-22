@@ -5,24 +5,20 @@ import javafx.scene.image.Image;
 import java.util.Objects;
 
 public class Player {
-    private String color;
-    private double xCord;
-    private double yCord=488;
+    private final String color;
     private boolean turn=true;
     private int tileNumber=0;
     private double stepX=32;
-    private double stepY=-45.55;
-    private Image image_active,image_inactive;
+    private final Image image_active;
+    private final Image image_inactive;
     private boolean active=false;
     public Player(String color) {
         if(color.equals("blueToken")) {
-            this.xCord = 38;
             this.image_inactive= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player1_inactive.png")));
             this.image_active= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player1_active.png")));
 
         }
         else {
-            this.xCord = 52;
             this.image_inactive= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player2_inactive.png")));
             this.image_active= new Image(Objects.requireNonNull(getClass().getResourceAsStream("player2_active.png")));
         }
@@ -31,26 +27,6 @@ public class Player {
 
     public String getColor() {
         return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public double getxCord() {
-        return xCord;
-    }
-
-    public void setxCord(int xCord) {
-        this.xCord = xCord;
-    }
-
-    public double getyCord() {
-        return yCord;
-    }
-
-    public void setyCord(int yCord) {
-        this.yCord = yCord;
     }
 
     public boolean isTurn() {
@@ -74,7 +50,6 @@ public class Player {
 
     public void setActive(boolean active) {
         this.active = active;
-        this.yCord=444;
     }
 
     public double getStepX() {
@@ -86,26 +61,15 @@ public class Player {
     }
 
     public double getStepY() {
-        return stepY;
-    }
-
-    public void setStepY(double stepY) {
-        this.stepY = stepY;
+        return -45.55;
     }
 
     public Image getImage_active() {
         return image_active;
     }
 
-    public void setImage_active(Image image_active) {
-        this.image_active = image_active;
-    }
-
     public Image getImage_inactive() {
         return image_inactive;
     }
 
-    public void setImage_inactive(Image image_inactive) {
-        this.image_inactive = image_inactive;
-    }
 }

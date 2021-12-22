@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -22,7 +21,7 @@ import java.util.ResourceBundle;
 
 public class GameBoardController implements Initializable {
     private int diceRolledFinal;
-    public boolean flag=false;
+    private boolean flag=false;
     HashMap<Integer,Snake> snakes = new HashMap<>();
     HashMap<Integer,Ladder> ladders= new HashMap<>();
 
@@ -33,8 +32,6 @@ public class GameBoardController implements Initializable {
     private ImageView exitImageView;
     @FXML
     private ImageView returnImageView;
-    @FXML
-    private ImageView bgImageView2;
     @FXML
     private ImageView p1ImageView;
     @FXML
@@ -62,11 +59,11 @@ public class GameBoardController implements Initializable {
     Player player1= new Player("blueToken");
     Player player2= new Player("greenToken");
 
-    //MEDIAPLAYER
-    public void selectTrack(Media media){
+    // MEDIA PLAYER
+    private void selectTrack(Media media){
         this.player = new MediaPlayer(media);
     }
-    public void play(Media media) {
+    private void play(Media media) {
         if (player != null) {
             player.stop();
         }
@@ -75,7 +72,7 @@ public class GameBoardController implements Initializable {
     }
 
     @FXML
-    public void onBackClick(MouseEvent event) throws IOException {
+    private void onBackClick(MouseEvent event) throws IOException {
         Media media= new Media(Paths.get("src/main/resources/com/example/snakesladder/Button.mp3").toUri().toString());
         play(media);
         setOpacityGameBoard(0.5);
@@ -98,11 +95,11 @@ public class GameBoardController implements Initializable {
     }
 
     @FXML
-    public void onDiceRoll(MouseEvent event) {
-        Media media= new Media(Paths.get("src/main/resources/com/example/snakesladder/newDice.mp3").toUri().toString());
-        play(media);
+    private void onDiceRoll(MouseEvent event) {
         if(!flag){
             flag=true;
+            Media media= new Media(Paths.get("src/main/resources/com/example/snakesladder/newDice.mp3").toUri().toString());
+            play(media);
             diceArrow.setVisible(false);
             Random rand = new Random();
             Thread thread = new Thread() {
@@ -188,7 +185,7 @@ public class GameBoardController implements Initializable {
         translate.play();
     }
 
-    public void movePlayer(Player player) {
+    private void movePlayer(Player player) {
         if(player.getTileNumber()+diceRolledFinal>100){
             return;
         }
@@ -198,6 +195,7 @@ public class GameBoardController implements Initializable {
         else
             token=greenToken;
         Thread thread = new Thread(() -> {
+            diceImageView.setDisable(true);
             for (int i=0;i<diceRolledFinal;i++){
                 TranslateTransition t=movePlayerHelper(player,token);
                 t.play();
@@ -216,6 +214,7 @@ public class GameBoardController implements Initializable {
             else if (ladders.containsKey(player.getTileNumber())) {
                ladderPath(player.getTileNumber(), token, player);
             }
+            diceImageView.setDisable(false);
 
         });
         thread.start();
@@ -238,13 +237,11 @@ public class GameBoardController implements Initializable {
         transition.setByX(byX);
         transition.setByY(byY);
         transition.setDuration(Duration.millis(200));
-        transition.setOnFinished(event -> {
-            transition.stop();
-        });
+        transition.setOnFinished(event -> transition.stop());
         return transition;
     }
 
-    public void ladderPath(int src,ImageView token,Player player){
+    private void ladderPath(int src,ImageView token,Player player){
         player.setTileNumber(ladders.get(player.getTileNumber()).getDest());
         double byX,byY;
         if(src==64 || src==66 || src==68){
@@ -257,7 +254,7 @@ public class GameBoardController implements Initializable {
             byY=-(45.55);
         }
         else{
-            player.setStepX(-player.getStepX());
+//            player.setStepX(-player.getStepX());
             byX=0;
             byY=-(4*45.55);
         }
@@ -266,7 +263,7 @@ public class GameBoardController implements Initializable {
         translateSnakeLadder(token,byX,byY);
     }
 
-    public void snakePath(int src,ImageView token,Player player){
+    private void snakePath(int src,ImageView token,Player player){
         player.setTileNumber(snakes.get(player.getTileNumber()).getDest());
         double byX,byY;
         if(src==24 || src==26 || src==28){
@@ -289,7 +286,7 @@ public class GameBoardController implements Initializable {
 
     }
 
-    public void translateSnakeLadder(ImageView token,double x, double y){
+    private void translateSnakeLadder(ImageView token,double x, double y){
         TranslateTransition transition= new TranslateTransition();
         transition.setNode(token);
         transition.setByY(y);
@@ -299,7 +296,7 @@ public class GameBoardController implements Initializable {
 
     }
 
-    public void onWin(Player player) {
+    private void onWin(Player player) {
         Media media= new Media(Paths.get("src/main/resources/com/example/snakesladder/Victory.mp3").toUri().toString());
         play(media);
 
@@ -325,7 +322,7 @@ public class GameBoardController implements Initializable {
         });
     }
 
-    public void setOpacityGameBoard(double v){
+    private void setOpacityGameBoard(double v){
         diceImageView.setOpacity(v);
         boardImageView.setOpacity(v);
         blueToken.setOpacity(v);
@@ -337,7 +334,7 @@ public class GameBoardController implements Initializable {
         p2ImageView.setOpacity(v);
     }
 
-    public void initializeSnakesAndLadders(){
+    private void initializeSnakesAndLadders(){
         snakes.put(24,new Snake(24,18));
         snakes.put(26,new Snake(26, 16));
         snakes.put(28,new Snake(28,14));

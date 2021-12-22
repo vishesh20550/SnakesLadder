@@ -29,8 +29,6 @@ public class IntroController implements Initializable {
     ImageView logoImageView;
     @FXML
     ImageView pwm;
-    @FXML
-    ImageView pwc;
 
     @FXML
     public void onPwmCLick(MouseEvent event){
@@ -47,10 +45,10 @@ public class IntroController implements Initializable {
     }
 
 
-    public void selectTrack(Media media){
+    private void selectTrack(Media media){
         this.player = new MediaPlayer(media);
     }
-    public void play(Media media) {
+    private void play(Media media) {
         if (player != null) {
             player.stop();
         }
@@ -75,11 +73,6 @@ public class IntroController implements Initializable {
         stage.show();
     }
 
-    @FXML
-    public void onPwcCLick(MouseEvent event){
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("GameBoard.fxml"));
-        setAndShowScene(event, fxmlLoader);
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -87,7 +80,6 @@ public class IntroController implements Initializable {
         play(media);
 
         ScaleTransition scale = new ScaleTransition(Duration.millis(1000));
-        ScaleTransition scale1 = new ScaleTransition(Duration.millis(1000));
         scale.setNode(pwm);
 
         scale.setFromX(0.0);
@@ -95,11 +87,6 @@ public class IntroController implements Initializable {
         scale.setToX(1);
         scale.setToY(1);
 
-        scale1.setNode(pwc);
-        scale1.setFromX(0.0);
-        scale1.setFromY(0.0);
-        scale1.setToX(1);
-        scale1.setToY(1);
 
 
         TranslateTransition translate1 = new TranslateTransition();
@@ -108,7 +95,7 @@ public class IntroController implements Initializable {
         translate1.setByY(99);
 
 
-        ParallelTransition para = new ParallelTransition(scale,scale1,translate1);
+        ParallelTransition para = new ParallelTransition(scale,translate1);
         para.play();
 
 

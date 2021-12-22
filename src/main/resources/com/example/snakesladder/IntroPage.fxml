@@ -16,14 +16,9 @@
             <Image url="@intro_logo.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="pwm" fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="285.0" onMouseClicked="#onPwmCLick" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="pwm" fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="343.0" onMouseClicked="#onPwmCLick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pwm.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="pwc" fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="369.0" onMouseClicked="#onPwcCLick" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@pwc.png" />
          </image>
       </ImageView>
    </children>
