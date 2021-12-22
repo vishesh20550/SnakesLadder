@@ -1,6 +1,8 @@
 package com.example.snakesladder;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -68,16 +70,18 @@ public class GameBoardController implements Initializable {
         Thread thread = new Thread(){
             int diceRolled;
             public void run() {
-                for (int i = 0; i < 10; i++) {
-                    diceRolled =(rand.nextInt(6) + 1);
-                    File file = new File("src/main/resources/com/example/snakesladder/dice" + diceRolled + ".png");
+                diceRolled =(rand.nextInt(6) + 1);
+                for (int i = 2; i < 8; i++) {
+                    File file = new File("src/main/resources/com/example/snakesladder/roll" + i + ".jpg");
                     diceImageView.setImage(new Image(file.toURI().toString()));
                     try {
-                        Thread.sleep(50);
+                        Thread.sleep(60);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
+                File file = new File("src/main/resources/com/example/snakesladder/dice" + diceRolled + ".png");
+                diceImageView.setImage(new Image(file.toURI().toString()));
                 diceRolledFinal=diceRolled;
                 if(player1.isTurn()){
                     try {
@@ -168,22 +172,11 @@ public class GameBoardController implements Initializable {
                     System.out.println(player.getColor()+" won");
                     onWin(player);
                 }
-                    if (snakes.containsKey(player.getTileNumber())&&flag) {
-                    Polyline polyline = new Polyline();
-                    Double[] path = snakePath1(player.getTileNumber(), token, player);
-                    System.out.println(Arrays.toString(path));
-                    polyline.getPoints().addAll(path);
-                    PathTransition ptransition = new PathTransition();
-                    ptransition.setNode(token);
-                    ptransition.setDuration(Duration.seconds(2));
-                    ptransition.setPath(polyline);
-                    ptransition.setCycleCount(1);
-                    ptransition.play();
-                    player.setTileNumber(snakes.get(player.getTileNumber()));
+                if (snakes.containsKey(player.getTileNumber())&&flag) {
+                    snakePath(player.getTileNumber(), token, player);
                 }
                 else if (ladders.containsKey(player.getTileNumber())&&flag) {
-                    System.out.println(player.getColor()+" is on ladder with tile "+player.getTileNumber());
-                    ladderPath(player.getTileNumber(), token, player);
+                   ladderPath(player.getTileNumber(), token, player);
                 }
 
             }
@@ -207,13 +200,14 @@ public class GameBoardController implements Initializable {
         player.setTileNumber(player.getTileNumber()+1);
         transition.setByX(byX);
         transition.setByY(byY);
-        transition.setDuration(Duration.millis(10));
+        transition.setDuration(Duration.millis(200));
         transition.setOnFinished(event -> {
             flag=true;
             transition.stop();
         });
         return transition;
     }
+
     public void ladderPath(int src,ImageView token,Player player){
         player.setTileNumber(ladders.get(player.getTileNumber()));
         double byX,byY;
@@ -231,38 +225,40 @@ public class GameBoardController implements Initializable {
             byX=0;
             byY=-(4*45.55);
         }
-        TranslateTransition transition= new TranslateTransition();
-        transition.setNode(token);
-        transition.setByY(byY);
-        transition.setByX(byX);
-        transition.setDuration(Duration.millis(300));
-        transition.play();
+        translateSnakeLadder(token,byX,byY);
     }
 
 
-    public Double[] snakePath1(int src,ImageView token,Player player){
-        double xCord= token.getTranslateX();
-        double yCord= token.getTranslateY();
+    public void snakePath(int src,ImageView token,Player player){
+        player.setTileNumber(snakes.get(player.getTileNumber()));
+        double byX,byY;
         if(src==24 || src==26 || src==28){
             player.setStepX(-player.getStepX());
-            return new Double[]{
-                    xCord,yCord,
-                    xCord-32,yCord+45.55
-            };
+            byX=-32;
+            byY=45.55;
         }
         else if(src==59 || src == 57 || src==55 || src ==99 || src == 97  || src == 95){
-            return new Double[]{
-                    xCord,yCord,
-                    xCord+32,yCord+(2*45.55)
-            };
+            byX=32;
+            byY=(2*45.55);
         }
         else{
-            return new Double[]{
-                    xCord,yCord,
-                    xCord,yCord+(5*45.55)
-            };
+            player.setStepX(-player.getStepX());
+            byX=0;
+            byY=(5*45.55);
         }
+        translateSnakeLadder(token,byX,byY);
     }
+
+    public void translateSnakeLadder(ImageView token,double x, double y){
+        TranslateTransition transition= new TranslateTransition();
+        transition.setNode(token);
+        transition.setByY(y);
+        transition.setByX(x);
+        transition.setDuration(Duration.millis(300));
+        transition.play();
+
+    }
+
     public void onWin(Player player) {
         setOpacityGameBoard(0.5);
         if(player.getColor().equals("blueToken")){
@@ -301,9 +297,9 @@ public class GameBoardController implements Initializable {
         snakes.put(55,34);
         snakes.put(57,36);
         snakes.put(59,38);
-        snakes.put(91,50);
         snakes.put(95,74);
         snakes.put(97,76);
+        snakes.put(91,50);
         snakes.put(99,78);
         ladders.put(5,17);
         ladders.put(7,15);
