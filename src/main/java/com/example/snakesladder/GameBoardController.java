@@ -306,7 +306,7 @@ public class GameBoardController implements Initializable {
             win.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("win_image_player1.png"))));
         }
         else{
-            win.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("win_image_player1.png"))));
+            win.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("win_image_player2.png"))));
         }
         replayImageView.setVisible(true);
         menuImageView.setVisible(true);
@@ -314,11 +314,8 @@ public class GameBoardController implements Initializable {
         menuImageView.setOnMouseClicked(mouseEvent -> {
             Media media1= new Media(Paths.get("src/main/resources/com/example/snakesladder/Button.mp3").toUri().toString());
             play(media1);
-            try {
-                onBackClick(mouseEvent);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IntroPage.fxml"));
+            new IntroController().setAndShowScene(mouseEvent, fxmlLoader);
         });
     }
 
